@@ -138,7 +138,6 @@ def main():
             st.markdown(prompt)
         
         try:
-            # Bedrockエージェントの呼び出し
             response = invoke_bedrock_agent(client, session_id, prompt)
             handle_agent_response(response, messages)
             
