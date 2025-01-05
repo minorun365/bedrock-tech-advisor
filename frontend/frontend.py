@@ -125,8 +125,6 @@ def show_error_popup(exeption):
         error_message = "【エラー】ナレッジベースのAurora DBがスリープしていたようです。数秒おいてから、ブラウザをリロードして再度お試しください🙏"
     elif exeption == "throttlingException":
         error_message = "【エラー】Bedrockのモデル負荷が高いようです。1分待ってから、ブラウザをリロードして再度お試しください🙏（改善しない場合は、モデルを変更するか[サービスクォータの引き上げ申請](https://aws.amazon.com/jp/blogs/news/generative-ai-amazon-bedrock-handling-quota-problems/)を実施ください）"
-    elif exeption == "internalServerException" or exeption == "badGatewayException" or exeption == "internalServerException":
-        error_message = "【エラー】エージェントに何か問題が起こったようです。ブラウザをリロードして再度お試しください🙏"
     st.error(error_message)
 
 def main():
