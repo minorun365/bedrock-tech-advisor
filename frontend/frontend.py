@@ -119,9 +119,13 @@ def handle_agent_response(response, messages):
                 st.write(answer)
                 messages.append({"role": "assistant", "text": answer})
 
-def show_error_popup():
+def show_error_popup(exeption):
     """エラーポップアップを表示する"""
-    st.error("【エラー】ナレッジベースのAurora DBがスリープしていたようです。数秒おいてから、ブラウザをリロードして再度お試しください🙏")
+    if exeption == "dependencyFailedException":
+        error_message = "【エラー】ナレッジベースのAurora DBがスリープしていたようです。数秒おいてから、ブラウザをリロードして再度お試しください🙏"
+    elif exeption == "throttlingException":
+        error_message = "【エラー】Bedrockのモデル負荷が高いようです。1分待ってから、ブラウザをリロードして再度お試しください🙏（改善しない場合は、モデルを変更するか[サービスクォータの引き上げ申請](https://aws.amazon.com/jp/blogs/news/generative-ai-amazon-bedrock-handling-quota-problems/)を実施ください）"
+    st.error(error_message)
 
 def main():
     """メインのアプリケーション処理"""
@@ -140,7 +144,9 @@ def main():
             
         except (EventStreamError, ClientError) as e:
             if "dependencyFailedException" in str(e):
-                show_error_popup()
+                show_error_popup("dependencyFailedException")
+            elif "throttlingException" in str(e):
+                show_error_popup("throttlingException")
             else:
                 raise e
 
