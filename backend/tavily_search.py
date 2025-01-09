@@ -3,7 +3,7 @@ import json
 from tavily import TavilyClient
 
 def lambda_handler(event, context):
-    # 環境変数からAPIキーを取得
+    # 環境変数からAPIキーを取得（簡易用。可能ならSecrets Manager等を使いましょう）
     tavily_api_key = os.environ.get('TAVILY_API_KEY')
     
     # eventからクエリパラメータを取得
